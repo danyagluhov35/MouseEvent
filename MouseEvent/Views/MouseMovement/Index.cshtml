@@ -6,22 +6,30 @@
 <body>
     <button class="sendData">Отправить данные</button>
 
-
-
     <script>
+
+        // Массив точек
         let movements = [];
+
+        // При движении мышки, данные записываются в массив
         document.addEventListener("mousemove", function(e) {
             let point = [e.clientX, e.clientY, Date.now()];
             movements.push({ x: point[0], y: point[1], t: point[2] });
         });
 
 
+        // При нажатии на кнопку, отправляем данные на сервер
         document.querySelector(".sendData").addEventListener("click", async e => {
-            const response = await fetch("MouseMovement/Save", {
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(movements)
-            })
+            try{
+                const response = await fetch("MouseMovement/Save", {
+                    method : "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(movements)
+                })
+            }
+            catch(error){
+                console.log(error)
+            }
         })
     </script>
 </body>
