@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мышеловка</title>
+</head>
+<body>
+    <button class="sendData">Отправить данные</button>
+
+
+
+    <script>
+        let movements = [];
+        document.addEventListener("mousemove", function(e) {
+            let point = [e.clientX, e.clientY, Date.now()];
+            movements.push({ x: point[0], y: point[1], t: point[2] });
+        });
+
+
+        document.querySelector(".sendData").addEventListener("click", async e => {
+            const response = await fetch("MouseMovement/Save", {
+                method : "POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(movements)
+            })
+        })
+    </script>
+</body>
+</html>
